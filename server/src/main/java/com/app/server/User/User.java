@@ -1,35 +1,42 @@
-package com.app.server.User;
+package com.app.server.user;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.app.server.common.CONSTANT;
+import com.app.server.role.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.util.List;
+import java.util.Set;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * Class to maintain user's account information
+ * Model class to contain user's account information
  * 
- * @author aadarshp31
+ * @author @aadarshp31
  */
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-
+  private Long user_id;
   @Column(name = "username", unique = true)
   private String username;
+  @Column(name = "email", unique = true)
+  private String email;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = CONSTANT.USER_ROLE_JUNCTION_TABLE_NAME, joinColumns = {
+      @JoinColumn(name = "user_id") }, inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private Set<Role> authorities;
 
   private String firstname;
   private String lastname;
@@ -38,23 +45,26 @@ public class User implements UserDetails {
   private Boolean isCredentialsNonExpired;
   private Boolean isEnabled;
 
-  public User(String username, String firstname, String lastname, String password, Role role) {
+  public User() {
+
+  }
+
+  public User(String username, String firstname, String lastname, String email, String password,
+      Set<Role> authorities) {
     this.username = username;
     this.firstname = firstname;
     this.lastname = lastname;
     this.password = password;
-    this.role = role;
+    this.email = email;
+    this.authorities = authorities;
     this.isAccountNonExpired = true;
     this.isCredentialsNonExpired = true;
     this.isEnabled = true;
   }
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
-
   @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(this.role.name()));
+  public Set<Role> getAuthorities() {
+    return this.authorities;
   }
 
   public String getFirstname() {
@@ -81,6 +91,14 @@ public class User implements UserDetails {
   @Override
   public String getUsername() {
     return this.username;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   @Override
