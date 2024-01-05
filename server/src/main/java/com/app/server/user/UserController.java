@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Class for handling user related endpoints
+ * 
+ * @author @aadarshp31
+ */
 @RestController
 @RequestMapping({ "/api/users", "/api/users/" })
 public class UserController {
