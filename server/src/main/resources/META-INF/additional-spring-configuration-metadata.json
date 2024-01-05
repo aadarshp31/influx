@@ -24,6 +24,11 @@
       "name": "influx.test-password",
       "type": "java.lang.String",
       "description": "Raw Password for test accounts"
+    },
+    {
+      "name": "influx.jwt-secret-key",
+      "type": "java.lang.String",
+      "description": "A key for signing jwt tokens"
     }
   ]
 }
