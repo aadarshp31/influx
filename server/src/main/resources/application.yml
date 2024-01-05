@@ -27,3 +27,4 @@ influx:
   test-admin-username: ${testAdminUsername}
   test-admin-email: ${testAdminEmail}
   test-password: ${testPassword}
+  jwt-secret-key: ${jwtSecretKey}
