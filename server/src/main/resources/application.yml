@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT}
 
 spring:
   datasource:
@@ -22,9 +22,9 @@ spring:
       format-sql: true
 
 influx:
-  test-user-username: ${testUserUsername}
-  test-user-email: ${testUserEmail}
-  test-admin-username: ${testAdminUsername}
-  test-admin-email: ${testAdminEmail}
-  test-password: ${testPassword}
-  jwt-secret-key: ${jwtSecretKey}
+  test-user-username: ${TEST_USER_USERNAME}
+  test-user-email: ${TEST_USER_EMAIL}
+  test-admin-username: ${ADMIN_USER_USERNAME}
+  test-admin-email: ${ADMIN_USER_EMAIL}
+  test-password: ${TEST_USER_PASSWORD}
+  jwt-secret-key: ${JWT_SECURITY_KEY}
