@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "influx.test-user-username",
+      "type": "java.lang.String",
+      "description": "Username for the test user type account"
+    },
+    {
+      "name": "influx.test-user-email",
+      "type": "java.lang.String",
+      "description": "Email for the test user type account"
+    },
+    {
+      "name": "influx.test-admin-username",
+      "type": "java.lang.String",
+      "description": "Username for the test admin type account"
+    },
+    {
+      "name": "influx.test-admin-email",
+      "type": "java.lang.String",
+      "description": "Email for the test admin type account"
+    },
+    {
+      "name": "influx.test-password",
+      "type": "java.lang.String",
+      "description": "Raw Password for test accounts"
+    },
+    {
+      "name": "influx.jwt-secret-key",
+      "type": "java.lang.String",
+      "description": "A key for signing jwt tokens"
+    }
+  ]
+}
