@@ -2,6 +2,7 @@ package com.app.server.user;
 
 import com.app.server.common.CONSTANT;
 import com.app.server.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,6 +41,7 @@ public class User implements UserDetails {
 
   private String firstname;
   private String lastname;
+  @JsonIgnore
   private String password;
   private Boolean isAccountNonExpired;
   private Boolean isCredentialsNonExpired;
