@@ -33,14 +33,14 @@ public class SecurityConfiguration {
         .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(customizer -> {
           customizer
-              .requestMatchers("/api/auth**")
+              .requestMatchers("/api/auth/**")
               .permitAll()
 
-              .requestMatchers("/api/admin**")
+              .requestMatchers("/api/admin/**")
               .hasRole(CONSTANT.ROLE_ADMINISTRATOR)
 
-              .requestMatchers("/api/users**")
-              .hasRole(CONSTANT.ROLE_USER)
+              .requestMatchers("/api/users/**")
+              .permitAll()
 
               .anyRequest()
               .authenticated();
