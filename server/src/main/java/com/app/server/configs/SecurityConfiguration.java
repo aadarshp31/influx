@@ -40,7 +40,7 @@ public class SecurityConfiguration {
               .hasRole(CONSTANT.ROLE_ADMINISTRATOR)
 
               .requestMatchers("/api/users/**")
-              .permitAll()
+              .hasRole(CONSTANT.ROLE_USER)
 
               .anyRequest()
               .authenticated();
