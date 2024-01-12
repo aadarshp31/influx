@@ -3,6 +3,7 @@ package com.app.server.authentication;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
@@ -57,11 +58,16 @@ public class JwtService {
    * @author @aadarshp31
    */
   public String generateToken(UserDetails userDetails, HashMap<String, Object> extraClaims) {
+    String scope = userDetails.getAuthorities().stream()
+        .map(item -> item.getAuthority())
+        .collect(Collectors.joining(" "));
+
     return Jwts
         .builder()
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60)))
         .subject(userDetails.getUsername())
+        .claim("roles", scope)
         .claims(extraClaims)
         .signWith(getSecretKey(), SIG.HS256)
         .compact();
