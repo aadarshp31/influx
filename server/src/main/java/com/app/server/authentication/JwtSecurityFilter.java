@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -23,6 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 
  * @author @aadarshp31
  */
+@Component
 public class JwtSecurityFilter extends OncePerRequestFilter {
 
   @Autowired
@@ -30,38 +32,39 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
   @Autowired
   private UserDetailsService userDetailsService;
 
+  @SuppressWarnings("null")
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
       String authorizationHeader = request.getHeader("Authorization");
 
-      if (authorizationHeader.equals(null) && !authorizationHeader.startsWith("Bearer ")) {
-        throw new AuthenticationException("Request is missing or invalid authorization header");
+      if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+        filterChain.doFilter(request, response);
+        return;
       }
 
       String token = authorizationHeader.split(" ")[1];
 
-      if (token.equals(null)) {
+      if (token == null) {
         throw new AuthenticationException("Invalid authentication token");
       }
 
       String username = jwtService.extractUsername(token);
 
-      if (username.equals(null)) {
+      if (username == null) {
         throw new AuthenticationException("Invalid authentication token");
       }
 
       UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-      if (SecurityContextHolder.getContext().getAuthentication().equals(null)) {
-
+      if (SecurityContextHolder.getContext().getAuthentication() == null) {
         if (!jwtService.isValidToken(token, userDetails)) {
           throw new AuthenticationException("Invalid authentication token");
         }
 
-        UsernamePasswordAuthenticationToken userAuthToken = new UsernamePasswordAuthenticationToken(username,
-            userDetails);
+        UsernamePasswordAuthenticationToken userAuthToken = new UsernamePasswordAuthenticationToken(userDetails, null,
+            userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(userAuthToken);
       }
 
