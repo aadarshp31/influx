@@ -2,6 +2,7 @@ package com.app.server.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,6 +49,9 @@ public class SecurityConfiguration {
               .permitAll()
 
               .requestMatchers("/api/admin/**")
+              .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
+
+              .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/")
               .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
               .requestMatchers("/api/users/**")
