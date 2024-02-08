@@ -2,11 +2,14 @@ package com.app.server.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.app.server.authentication.JwtSecurityFilter;
 import com.app.server.common.CONSTANT;
 
 /**
@@ -14,9 +17,17 @@ import com.app.server.common.CONSTANT;
  * 
  * @author @aadarshp31
  */
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
+
+  private final AuthenticationProvider authenticationProvider;
+  private final JwtSecurityFilter jwtSecurityFilter;
+
+  public SecurityConfiguration(AuthenticationProvider authenticationProvider, JwtSecurityFilter jwtSecurityFilter) {
+    this.authenticationProvider = authenticationProvider;
+    this.jwtSecurityFilter = jwtSecurityFilter;
+  }
 
   /**
    * This is our custom SecurityFilterChain to handle access of api endpoints
@@ -37,15 +48,18 @@ public class SecurityConfiguration {
               .permitAll()
 
               .requestMatchers("/api/admin/**")
-              .hasRole(CONSTANT.ROLE_ADMINISTRATOR)
+              .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
               .requestMatchers("/api/users/**")
-              .permitAll()
+              .hasAuthority(CONSTANT.ROLE_USER)
 
               .anyRequest()
               .authenticated();
         });
+    http.authenticationProvider(authenticationProvider);
+    http.addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
+
 }
