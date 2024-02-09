@@ -2,7 +2,7 @@
 
 A peer to peer live video calling service.
 
-## Teck Stack
+## Tech Stack
 
 ### Backend
 
