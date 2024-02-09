@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.server.common.CONSTANT;
@@ -40,6 +41,8 @@ public class AuthenticationService {
   private JwtService jwtService;
   @Autowired
   private AuthenticationManager authenticationManager;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   /**
    * Service to create a new user. Stores the new user to database.
@@ -71,7 +74,7 @@ public class AuthenticationService {
           userSignupDTO.firstname,
           userSignupDTO.lastname,
           userSignupDTO.email,
-          userSignupDTO.password,
+          passwordEncoder.encode(userSignupDTO.password),
           authorities);
 
       User newlyCreatedUser = userRepository.save(user);
