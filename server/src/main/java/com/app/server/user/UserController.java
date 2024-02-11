@@ -1,9 +1,11 @@
 package com.app.server.user;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +31,16 @@ public class UserController {
   }
 
   @GetMapping({ "/{username}" })
-  public List<User> getUserByUsername(@PathVariable String username) {
-    if (userRepository.findByUsername(username).isPresent()) {
-      return List.of(userRepository.findByUsername(username).get());
+  public ResponseEntity<Object> getUserByUsername(@PathVariable String username) {
+    Map<String, Object> body = new HashMap<String, Object>();
+
+    if (!userRepository.findByUsername(username).isPresent()) {
+      return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
     }
 
-    return new ArrayList<User>();
+    body.put("success", false);
+    body.put("message", "user found");
+    return new ResponseEntity<Object>(List.of(userRepository.findByUsername(username).get()), HttpStatus.OK);
   }
 
   @GetMapping({ "access", "access/" })
