@@ -26,7 +26,43 @@ public class UserService {
   private PasswordEncoder passwordEncoder;
 
   /**
-   * Updates user details usign username
+   * Gets user(s) from the database
+   * 
+   * @param username username of the user to be fetched
+   * @return List of users
+   * @throws EntityNotFoundException, AccessDeniedException
+   * @author @aadarshp31
+   */
+  public List<User> getUsers(String username) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
+    List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
+        .stream()
+        .map(role -> role.getAuthority())
+        .collect(Collectors.toList());
+
+    if (username == null) {
+      if (!rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+
+      }
+      return userRepository.findAll();
+    }
+
+    if (!userRepository.findByUsername(username).isPresent()) {
+      throw new EntityNotFoundException("User not found with username: " + username);
+    }
+
+    User user = userRepository.findByUsername(username).get();
+
+    if (loggedInUser.getId() != user.getId()) {
+      throw new AccessDeniedException("You are not authorized to access this resource");
+    }
+
+    return List.of(user);
+  }
+
+  /**
+   * Updates user details using username
    * 
    * @param username    username of the user to be updated
    * @param newUserData data to be updated
@@ -40,7 +76,6 @@ public class UserService {
   public User updateUser(String username, UpdateUserDTO newUserData)
       throws EntityNotFoundException, AccessDeniedException {
 
-    // Get the authentication object from the SecurityContextHolder
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
     List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
