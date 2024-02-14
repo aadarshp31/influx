@@ -28,27 +28,58 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
   @Autowired
-  private UserRepository userRepository;
-
-  @Autowired
   private UserService userService;
 
   @GetMapping({ "", "/" })
-  public List<User> getAllUsers() {
-    return userRepository.findAll();
+  public ResponseEntity<Object> getAllUsers() {
+    Map<String, Object> body = new HashMap<String, Object>();
+    try {
+      List<User> users = userService.getUsers();
+      body.put("success", true);
+      body.put("message", "users found");
+      body.put("users", users);
+      return new ResponseEntity<Object>(body, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      body.put("success", false);
+
+      if (e instanceof AccessDeniedException) {
+        body.put("message", e.getMessage());
+        return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+      }
+
+      body.put("message", "something went wrong");
+      return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  @GetMapping({ "/{username}" })
+  @GetMapping({ "/{username}", "/{username}/" })
   public ResponseEntity<Object> getUserByUsername(@PathVariable String username) {
     Map<String, Object> body = new HashMap<String, Object>();
+    try {
+      List<User> users = userService.getUsers(username);
+      body.put("success", true);
+      body.put("message", "user found");
+      body.put("users", users);
 
-    if (!userRepository.findByUsername(username).isPresent()) {
-      return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<Object>(body, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      body.put("success", false);
+
+      if (e instanceof EntityNotFoundException) {
+        return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+      }
+
+      if (e instanceof AccessDeniedException) {
+        body.put("message", e.getMessage());
+        return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+      }
+
+      body.put("message", "something went wrong");
+      return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    body.put("success", false);
-    body.put("message", "user found");
-    return new ResponseEntity<Object>(List.of(userRepository.findByUsername(username).get()), HttpStatus.OK);
   }
 
   @GetMapping({ "access", "access/" })

@@ -26,14 +26,13 @@ public class UserService {
   private PasswordEncoder passwordEncoder;
 
   /**
-   * Gets user(s) from the database
+   * Gets list of users from the database
    * 
-   * @param username username of the user to be fetched
    * @return List of users
-   * @throws EntityNotFoundException, AccessDeniedException
+   * @throws AccessDeniedException
    * @author @aadarshp31
    */
-  public List<User> getUsers(String username) {
+  public List<User> getUsers() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
     List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
@@ -41,12 +40,25 @@ public class UserService {
         .map(role -> role.getAuthority())
         .collect(Collectors.toList());
 
-    if (username == null) {
-      if (!rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
-
-      }
-      return userRepository.findAll();
+    if (!rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+      throw new AccessDeniedException("You are not authorized to access this resource");
     }
+
+    return userRepository.findAll();
+  }
+
+  /**
+   * Gets a user by username from the database
+   * 
+   * @param username username of the user to be fetched
+   * @return List of users
+   * @throws EntityNotFoundException
+   * @throws AccessDeniedException
+   * @author @aadarshp31
+   */
+  public List<User> getUsers(String username) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
 
     if (!userRepository.findByUsername(username).isPresent()) {
       throw new EntityNotFoundException("User not found with username: " + username);
