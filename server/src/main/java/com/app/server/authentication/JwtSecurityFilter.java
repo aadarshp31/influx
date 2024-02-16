@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.app.server.utils.CookieUtils;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,13 +40,18 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
     try {
       String authorizationHeader = request.getHeader("Authorization");
+      String cookieHeader = request.getHeader("Cookie");
+      String token = null;
 
-      if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+      if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        token = authorizationHeader.split(" ")[1];
+      } else if (cookieHeader != null) {
+        String cookieToken = CookieUtils.getCookieValue(request, "token");
+        token = cookieToken;
+      } else {
         filterChain.doFilter(request, response);
         return;
       }
-
-      String token = authorizationHeader.split(" ")[1];
 
       if (token == null) {
         throw new AuthenticationException("Invalid authentication token");
