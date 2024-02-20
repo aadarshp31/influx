@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -115,6 +116,41 @@ public class UserController {
 
       e.printStackTrace();
       return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
+    }
+
+  }
+
+  @DeleteMapping({ "/{username}", "/{username}/" })
+  public ResponseEntity<?> deleteUser(@PathVariable String username) {
+    Map<String, Object> body = new HashMap<>();
+    body.put("success", false);
+    body.put("message", String.format("failed to delete user with username '%s'", username));
+    try {
+      boolean isSuccess = userService.deleteUser(username);
+
+      if (!isSuccess) {
+        return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
+      }
+
+      body.put("success", true);
+      body.put("message", String.format("successfully deleted user with username '%s'", username));
+
+      return new ResponseEntity<Object>(body, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+
+      if (e instanceof EntityNotFoundException) {
+        body.put("message", String.format("user with username '%s' does not exists", username));
+        return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
+      }
+
+      if (e instanceof AccessDeniedException) {
+        body.put("message", e.getMessage());
+        return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+      }
+
+      body.put("message", "something went wrong");
+      return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
   }

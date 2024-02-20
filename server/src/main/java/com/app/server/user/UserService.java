@@ -161,4 +161,39 @@ public class UserService {
     return updatedUser;
   }
 
+  /**
+   * Deletes a user using username
+   * 
+   * @param username username of the user to be updated
+   * @return boolean indicating whether the user has been deleted successfully
+   * @throws EntityNotFoundException when no user with provided username is found
+   *                                 in database
+   * @throws AccessDeniedException   when current authenticated user does not have
+   *                                 access to delete requested user's profile
+   * @author @aadarshp31
+   */
+  public boolean deleteUser(String username) throws EntityNotFoundException, AccessDeniedException {
+    boolean isSuccess = false;
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
+    List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
+        .stream()
+        .map(role -> role.getAuthority())
+        .collect(Collectors.toList());
+
+    User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+
+    if (user == null) {
+      throw new EntityNotFoundException("User not found with username: " + username);
+    }
+
+    if (!rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+      throw new AccessDeniedException("You are not allowed to delete a user.");
+    }
+
+    userRepository.delete(user);
+    isSuccess = true;
+    return isSuccess;
+  }
+
 }
