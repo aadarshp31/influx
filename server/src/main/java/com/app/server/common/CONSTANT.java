@@ -12,4 +12,7 @@ public class CONSTANT {
   // Role related contants
   public final static String ROLE_ADMINISTRATOR = "ADMIN";
   public final static String ROLE_USER = "USER";
+
+  // header related constants
+  public final static String ACCESS_TOKEN = "access_token";
 }

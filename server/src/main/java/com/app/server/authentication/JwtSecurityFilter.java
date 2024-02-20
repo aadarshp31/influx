@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.app.server.common.CONSTANT;
 import com.app.server.utils.CookieUtils;
 
 import jakarta.servlet.FilterChain;
@@ -33,6 +34,8 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
   private JwtService jwtService;
   @Autowired
   private UserDetailsService userDetailsService;
+  @Autowired
+  private CookieUtils cookieUtils;
 
   @SuppressWarnings("null")
   @Override
@@ -46,7 +49,7 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
       if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
         token = authorizationHeader.split(" ")[1];
       } else if (cookieHeader != null) {
-        String cookieToken = CookieUtils.getCookieValue(request, "token");
+        String cookieToken = cookieUtils.getCookieValue(CONSTANT.ACCESS_TOKEN);
         token = cookieToken;
       } else {
         filterChain.doFilter(request, response);

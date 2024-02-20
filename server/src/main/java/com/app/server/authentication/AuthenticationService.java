@@ -19,6 +19,7 @@ import com.app.server.role.Role;
 import com.app.server.role.RoleRepository;
 import com.app.server.user.User;
 import com.app.server.user.UserRepository;
+import com.app.server.utils.CookieUtils;
 
 import jakarta.transaction.Transactional;
 
@@ -43,6 +44,8 @@ public class AuthenticationService {
   private AuthenticationManager authenticationManager;
   @Autowired
   private PasswordEncoder passwordEncoder;
+  @Autowired
+  private CookieUtils cookieUtils;
 
   /**
    * Service to create a new user. Stores the new user to database.
@@ -120,7 +123,8 @@ public class AuthenticationService {
       body.put("status", "success");
       body.put("message", "User signed in successfully");
       body.put("user", user);
-      body.put("access_token", jwtToken);
+      body.put(CONSTANT.ACCESS_TOKEN, jwtToken);
+      cookieUtils.setCookieValue(CONSTANT.ACCESS_TOKEN, jwtToken);
       return new ResponseEntity<Object>(body, HttpStatus.OK);
 
     } catch (AuthenticationException e) {
