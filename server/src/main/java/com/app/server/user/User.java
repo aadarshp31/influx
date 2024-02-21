@@ -64,9 +64,21 @@ public class User implements UserDetails {
     this.isEnabled = true;
   }
 
+  public Long getId() {
+    return user_id;
+  }
+
+  public void setId(Long user_id) {
+    this.user_id = user_id;
+  }
+
   @Override
   public Set<Role> getAuthorities() {
     return this.authorities;
+  }
+
+  public void setAuthorities(Set<Role> authorities) {
+    this.authorities = authorities;
   }
 
   public String getFirstname() {
@@ -90,9 +102,17 @@ public class User implements UserDetails {
     return this.password;
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
   @Override
   public String getUsername() {
     return this.username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getEmail() {
@@ -108,8 +128,16 @@ public class User implements UserDetails {
     return this.isAccountNonExpired;
   }
 
+  public boolean setIsAccountNonExpired(boolean isAccountNonExpired) {
+    return this.isAccountNonExpired;
+  }
+
   @Override
   public boolean isAccountNonLocked() {
+    return this.isAccountNonExpired;
+  }
+
+  public boolean setIsAccountNonLocked(boolean isAccountNonExpired) {
     return this.isAccountNonExpired;
   }
 
@@ -118,9 +146,17 @@ public class User implements UserDetails {
     return this.isCredentialsNonExpired;
   }
 
+  public boolean setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
+    return this.isCredentialsNonExpired = isCredentialsNonExpired;
+  }
+
   @Override
   public boolean isEnabled() {
     return this.isEnabled;
+  }
+
+  public boolean setIsEnabled(boolean isEnabled) {
+    return this.isEnabled = isEnabled;
   }
 
 }

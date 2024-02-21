@@ -54,6 +54,12 @@ public class SecurityConfiguration {
               .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/")
               .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
+              .requestMatchers(HttpMethod.PUT, "/api/users", "/api/users/**")
+              .hasAnyAuthority(CONSTANT.ROLE_USER, CONSTANT.ROLE_ADMINISTRATOR)
+
+              .requestMatchers(HttpMethod.DELETE, "/api/users", "/api/users/**")
+              .hasAnyAuthority(CONSTANT.ROLE_ADMINISTRATOR)
+
               .requestMatchers("/api/users/**")
               .hasAuthority(CONSTANT.ROLE_USER)
 
