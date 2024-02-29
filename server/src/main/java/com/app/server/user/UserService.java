@@ -1,6 +1,5 @@
 package com.app.server.user;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.server.common.CONSTANT;
-import com.app.server.role.Role;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -209,7 +207,7 @@ public class UserService {
    *                                 requested resource or doesn't have admin
    *                                 access
    */
-  public List<Role> getRolesByUsername(String username) throws EntityNotFoundException, AccessDeniedException {
+  public List<String> getRolesByUsername(String username) throws EntityNotFoundException, AccessDeniedException {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
     List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
@@ -217,13 +215,13 @@ public class UserService {
         .map(role -> role.getAuthority())
         .collect(Collectors.toList());
 
-    if (username != loggedInUser.getUsername() || !rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+    if (!username.equals(loggedInUser.getUsername()) && !rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
       throw new AccessDeniedException("You are not authorized to access this resource");
     }
 
     User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
 
-    return new ArrayList<Role>(user.getAuthorities());
+    return user.getAuthorities().stream().map((r) -> r.getAuthority()).toList();
   }
 
 }

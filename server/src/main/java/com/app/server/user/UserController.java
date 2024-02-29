@@ -121,7 +121,7 @@ public class UserController {
   }
 
   @DeleteMapping({ "/{username}", "/{username}/" })
-  public ResponseEntity<?> deleteUser(@PathVariable String username) {
+  public ResponseEntity<Object> deleteUser(@PathVariable String username) {
     Map<String, Object> body = new HashMap<>();
     body.put("success", false);
     body.put("message", String.format("failed to delete user with username '%s'", username));
@@ -153,6 +153,28 @@ public class UserController {
       return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+  }
+
+  @GetMapping({ "/{username}/roles", "/{username}/roles/" })
+  public ResponseEntity<Object> getRolesByUsername(@PathVariable String username) {
+    Map<String, Object> body = new HashMap<>();
+    body.put("success", false);
+    try {
+      List<String> roles = userService.getRolesByUsername(username);
+      body.put("success", true);
+      body.put("message", String.format("Found all roles for the user with username '%s'", username));
+      body.put("roles", roles);
+      return new ResponseEntity<Object>(body, HttpStatus.OK);
+    } catch (EntityNotFoundException e) {
+      body.put("message", e.getMessage());
+      return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
+    } catch (AccessDeniedException e) {
+      body.put("message", e.getMessage());
+      return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+    } catch (Exception e) {
+      body.put("message", e.getMessage());
+      return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
 }
