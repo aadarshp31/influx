@@ -1,5 +1,6 @@
 package com.app.server.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.server.common.CONSTANT;
+import com.app.server.role.Role;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -194,6 +196,34 @@ public class UserService {
     userRepository.delete(user);
     isSuccess = true;
     return isSuccess;
+  }
+
+  /**
+   * Gets roles for a particular user having given username
+   * 
+   * @param username username of the requested user
+   * @return list of roles assigned to the user
+   * @author @aadarshp31
+   * @throws EntityNotFoundException when there is no user with given username
+   * @throws AccessDeniedException   when requesting user is not the same as the
+   *                                 requested resource or doesn't have admin
+   *                                 access
+   */
+  public List<Role> getRolesByUsername(String username) throws EntityNotFoundException, AccessDeniedException {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
+    List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
+        .stream()
+        .map(role -> role.getAuthority())
+        .collect(Collectors.toList());
+
+    if (username != loggedInUser.getUsername() || !rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+      throw new AccessDeniedException("You are not authorized to access this resource");
+    }
+
+    User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+
+    return new ArrayList<Role>(user.getAuthorities());
   }
 
 }
