@@ -196,4 +196,32 @@ public class UserService {
     return isSuccess;
   }
 
+  /**
+   * Gets roles for a particular user having given username
+   * 
+   * @param username username of the requested user
+   * @return list of roles assigned to the user
+   * @author @aadarshp31
+   * @throws EntityNotFoundException when there is no user with given username
+   * @throws AccessDeniedException   when requesting user is not the same as the
+   *                                 requested resource or doesn't have admin
+   *                                 access
+   */
+  public List<String> getRolesByUsername(String username) throws EntityNotFoundException, AccessDeniedException {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User loggedInUser = userRepository.findByUsername(authentication.getName()).get();
+    List<String> rolesOfLoggedInUser = loggedInUser.getAuthorities()
+        .stream()
+        .map(role -> role.getAuthority())
+        .collect(Collectors.toList());
+
+    if (!username.equals(loggedInUser.getUsername()) && !rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
+      throw new AccessDeniedException("You are not authorized to access this resource");
+    }
+
+    User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+
+    return user.getAuthorities().stream().map((r) -> r.getAuthority()).toList();
+  }
+
 }
