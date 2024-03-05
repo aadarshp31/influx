@@ -1,5 +1,9 @@
 server:
   port: ${PORT}
+  ssl:
+    certificate-private-key: ${CERTIFICATE-PRIVATE-KEY}
+    certificate: ${CERTIFICATE}
+    enabled: ${SSL_ENABLED}
 
 spring:
   datasource:
