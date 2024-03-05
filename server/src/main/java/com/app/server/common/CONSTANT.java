@@ -14,5 +14,5 @@ public class CONSTANT {
   public final static String ROLE_USER = "USER";
 
   // header related constants
-  public final static String ACCESS_TOKEN = "access_token";
+  public final static String ACCESS_TOKEN = "token";
 }
