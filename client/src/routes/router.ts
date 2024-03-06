@@ -1,4 +1,4 @@
-import AuthenticationPage from "@/components/pages/AuthenticationPage";
+import LoginPage from "@/components/pages/LoginPage";
 import HomePage from "@/components/pages/HomePage";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    Component: AuthenticationPage
+    Component: LoginPage
   }
 ]);
 
