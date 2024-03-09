@@ -8,12 +8,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  server: {
-    https: {
-      key: "../certificates/localhost-key.pem",
-      cert: "../certificates/localhost.pem"
     }
   }
 })
