@@ -1,5 +1,5 @@
-import AuthenticationPage from "@/components/pages/AuthenticationPage";
-import HomePage from "@/components/pages/HomePage";
+import LoginPage from "@/components/pages/LoginPage/LoginPage";
+import HomePage from "@/components/pages/HomePage/HomePage";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    Component: AuthenticationPage
+    Component: LoginPage
   }
 ]);
 
