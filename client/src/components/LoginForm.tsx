@@ -9,18 +9,18 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
+	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import AuthApi from '@/apis/auth';
 
 const formSchema = z.object({
 	username: z.string().min(2, {
-		message: 'Username must be at least 2 characters.',
+		message: 'Username must be at least 2 characters.'
 	}),
 	password: z.string().min(8, {
-		message: 'Password must be at least 8 characters.',
-	}),
+		message: 'Password must be at least 8 characters.'
+	})
 });
 
 type Props = { toggleAuthForm: Function };
@@ -30,8 +30,8 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			username: '',
-			password: '',
-		},
+			password: ''
+		}
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {

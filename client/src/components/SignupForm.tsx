@@ -9,27 +9,27 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
+	FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import AuthApi from '@/apis/auth';
 
 const formSchema = z.object({
 	firstname: z.string().min(2, {
-		message: 'Firstname must be at least 2 characters.',
+		message: 'Firstname must be at least 2 characters.'
 	}),
 	lastname: z.string().min(2, {
-		message: 'Lastname must be at least 2 characters.',
+		message: 'Lastname must be at least 2 characters.'
 	}),
 	email: z.string().email({
-		message: 'Please enter a valid email.',
+		message: 'Please enter a valid email.'
 	}),
 	username: z.string().min(2, {
-		message: 'Username must be at least 2 characters.',
+		message: 'Username must be at least 2 characters.'
 	}),
 	password: z.string().min(8, {
-		message: 'Password must be at least 8 characters.',
-	}),
+		message: 'Password must be at least 8 characters.'
+	})
 });
 type Props = { toggleAuthForm: Function };
 export function SignupForm({ toggleAuthForm }: Props) {
@@ -40,8 +40,8 @@ export function SignupForm({ toggleAuthForm }: Props) {
 			lastname: '',
 			email: '',
 			username: '',
-			password: '',
-		},
+			password: ''
+		}
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {

@@ -3,7 +3,7 @@ import {
 	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogHeader,
-	AlertDialogTrigger,
+	AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { SignupForm } from '@/components/SignupForm';
