@@ -34,12 +34,6 @@ function Header({}: Props) {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
-	const [isAuthModal, setisAuthModal] = useState(false);
-
-	const toggleAuthModal = () => {
-		setisAuthModal(!isAuthModal);
-	};
-
 	return (
 		<header className='relative w-full border-b bg-white pb-4'>
 			<div className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2'>
@@ -75,7 +69,7 @@ function Header({}: Props) {
 					</ul>
 				</div>
 				<div className='hidden lg:block'>
-					<AuthModal isSignUp={false} />
+					<AuthModal />
 				</div>
 				<div className='lg:hidden'>
 					<Menu onClick={toggleMenu} className='h-6 w-6 cursor-pointer' />
@@ -128,7 +122,7 @@ function Header({}: Props) {
 										))}
 									</nav>
 								</div>
-								<AuthModal isSignUp={false} />
+								<AuthModal />
 							</div>
 						</div>
 					</div>
