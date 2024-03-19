@@ -31,7 +31,9 @@ const formSchema = z.object({
 		message: 'Password must be at least 8 characters.'
 	})
 });
-type Props = { toggleAuthForm: Function };
+type Props = {
+	toggleAuthForm: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+};
 export function SignupForm({ toggleAuthForm }: Props) {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),

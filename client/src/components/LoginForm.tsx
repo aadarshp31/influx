@@ -23,7 +23,9 @@ const formSchema = z.object({
 	})
 });
 
-type Props = { toggleAuthForm: Function };
+type Props = {
+	toggleAuthForm: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+};
 
 export default function LoginForm({ toggleAuthForm }: Props) {
 	const form = useForm<z.infer<typeof formSchema>>({
