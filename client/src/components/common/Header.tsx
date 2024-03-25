@@ -7,23 +7,23 @@ type Props = {};
 const menuItems = [
 	{
 		name: 'Home',
-		href: '#'
+		href: '/'
 	},
 	{
 		name: 'About',
-		href: '#'
+		href: '/about'
 	},
 	{
 		name: 'Contact',
-		href: '#'
+		href: '/contact'
 	},
 	{
 		name: 'Blogs',
-		href: '#'
+		href: '/blogs'
 	},
 	{
 		name: 'Authors',
-		href: 'authors'
+		href: '/authors'
 	}
 ];
 
