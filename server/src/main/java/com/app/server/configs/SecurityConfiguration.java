@@ -45,7 +45,7 @@ public class SecurityConfiguration {
         .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(customizer -> {
           customizer
-              .requestMatchers("/api/auth/**")
+              .requestMatchers("/api", "/api/", "/api/auth/**")
               .permitAll()
 
               .requestMatchers("/api/admin/**")
