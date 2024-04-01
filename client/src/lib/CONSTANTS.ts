@@ -3,4 +3,8 @@ export default class CONSTANTS {
   static readonly SIGNUP_API = '/auth/signup';
   static readonly LOGIN_API = '/auth/signin';
   static readonly USER_API = '/users';
+
+  // auth
+  static readonly AUTH_TOKEN_KEY = 'token';
+  static readonly USER_KEY = 'user';
 }
