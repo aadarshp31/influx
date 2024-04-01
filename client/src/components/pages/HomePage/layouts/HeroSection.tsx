@@ -14,12 +14,11 @@ function HeroSection({}: Props) {
 						</p>
 					</div>
 					<h1 className='mt-8 max-w-4xl text-3xl font-bold tracking-tight text-black md:text-4xl lg:text-6xl'>
-						People who really cares about your business
+						Connect with people who really cares about your work
 					</h1>
 					<p className='mt-8 max-w-3xl text-lg text-gray-700'>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-						ipsam nulla aperiam quo possimus, nihil molestiae modi tenetur esse
-						qui repudiandae cum fuga aspernatur ea?
+						Influx is a meeting app that allows you to host virtual meetings or
+						one-on-one session if that's what you prefer.
 					</p>
 					<div className='mt-8'>
 						<button

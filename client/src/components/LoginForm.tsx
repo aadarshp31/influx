@@ -41,7 +41,7 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 			const res = await AuthApi.login(values);
 			localStorage.setItem('token', JSON.stringify(res.token));
 			localStorage.setItem('user', JSON.stringify(res.user));
-			console.log('Successfully logged in!', values, res);
+			location.pathname = '/';
 		} catch (error: any) {
 			console.error(error);
 		}
