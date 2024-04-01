@@ -23,11 +23,10 @@ function Footer({}: Props) {
 								<span className='ml-4 text-lg font-bold'>Influx</span>
 							</div>
 							<div>
-								<p className='mb-4  text-base font-medium'>
-									The Tailwind CSS Component library
-								</p>
+								<p className='mb-4  text-base font-medium'>The Meeting app</p>
 								<p className='text-sm text-gray-600'>
-									&copy; Copyright 2022. All Rights Reserved by Influx.
+									&copy; Copyright {new Date().getFullYear()}. All Rights
+									Reserved by <a href='/authors'>Authors</a>
 								</p>
 							</div>
 						</div>
@@ -41,7 +40,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Features
 									</a>
@@ -49,7 +48,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Pricing
 									</a>
@@ -57,7 +56,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Affiliate Program
 									</a>
@@ -65,7 +64,7 @@ function Footer({}: Props) {
 								<li>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Press Kit
 									</a>
@@ -82,7 +81,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Account
 									</a>
@@ -90,7 +89,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Help
 									</a>
@@ -98,7 +97,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Contact Us
 									</a>
@@ -106,7 +105,7 @@ function Footer({}: Props) {
 								<li>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Customer Support
 									</a>
@@ -123,7 +122,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Terms &amp; Conditions
 									</a>
@@ -131,7 +130,7 @@ function Footer({}: Props) {
 								<li className='mb-4'>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Privacy Policy
 									</a>
@@ -139,7 +138,7 @@ function Footer({}: Props) {
 								<li>
 									<a
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='#'
+										href='/'
 									>
 										Licensing
 									</a>
