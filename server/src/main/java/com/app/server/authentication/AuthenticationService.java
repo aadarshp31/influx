@@ -136,4 +136,17 @@ public class AuthenticationService {
     }
   }
 
+  /**
+   * Service to logout user at client side via removing cookies.
+   * 
+   * @return logout success reponse object
+   * @author @aadarshp31
+   */
+  public ResponseEntity<Object> logout() {
+    Map<String, Object> body = new HashMap<String, Object>();
+    cookieUtils.setCookieValue(CONSTANT.ACCESS_TOKEN, "deleted", 0);
+    body.put("status", "success");
+    body.put("message", "User logged out successfully");
+    return new ResponseEntity<Object>(body, HttpStatus.OK);
+  }
 }

@@ -28,10 +28,12 @@ export default class API {
    * @author @aadarshp31
    */
   addAuthHeader() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const token = localStorage.getItem(CONSTANTS.AUTH_TOKEN_KEY);
+
+    if (token !== null) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(token)}`;
     }
+    return this;
   };
 
   /**

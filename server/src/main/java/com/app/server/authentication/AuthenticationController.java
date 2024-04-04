@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Contains auth related api controller methods
@@ -44,6 +45,17 @@ public class AuthenticationController {
   @PostMapping({ "/signin", "/signin/" })
   public ResponseEntity<Object> signin(@RequestBody UserSigninDTO userSigninDTO) {
     return authenticationService.signin(userSigninDTO);
+  }
+
+  /**
+   * Controller method to logout user.
+   * 
+   * @return Logout success respons onject
+   * @author @aadarshp31
+   */
+  @GetMapping({ "/logout", "/logout/" })
+  public ResponseEntity<Object> logout() {
+    return authenticationService.logout();
   }
 
 }

@@ -34,7 +34,23 @@ public class CookieUtils {
     Cookie cookie = new Cookie(key, value);
     cookie.setPath("/");
     cookie.setHttpOnly(true);
-    cookie.setMaxAge(60 * 60 * 2); // 2 hours token expiration time in seconds
+    cookie.setMaxAge(60 * 60 * 12); // 12 hours token expiration time in seconds
+    response.addCookie(cookie);
+  }
+
+  /**
+   * Sets key value pair to cookie for current HttpServletResponse
+   * 
+   * @param key    key to be stored in cookie
+   * @param value  value to be stored in cookie
+   * @param maxAge expiration duration
+   * @author @aadarshp31
+   */
+  public void setCookieValue(String key, String value, Integer maxAge) {
+    Cookie cookie = new Cookie(key, value);
+    cookie.setPath("/");
+    cookie.setHttpOnly(true);
+    cookie.setMaxAge(maxAge); // expiration time in seconds
     response.addCookie(cookie);
   }
 

@@ -1,3 +1,4 @@
+import AuthApi from "@/apis/auth";
 import CONSTANTS from "./CONSTANTS";
 
 /**
@@ -56,10 +57,13 @@ export default class AuthUtils {
 
   /**
    * Logs out the user at the client side
-   * @author aadarshp31
+   * @author @aadarshp31
    */
-  static logout() {
+  static async logout() {
+    // remove browser cookie via http request to backend
+    await AuthApi.logout();
 
+    // cleanup localstorage
     let token: string | null = localStorage.getItem(CONSTANTS.AUTH_TOKEN_KEY);
     let user: string | null = localStorage.getItem(CONSTANTS.USER_KEY);
 
