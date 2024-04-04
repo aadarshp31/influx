@@ -9,6 +9,15 @@ import CONSTANTS from '@/lib/CONSTANTS';
 export default class AuthApi {
 
   /**
+   * Makes a GET request to the backend to delete browser cookie via http response header
+   * @returns void
+   * @author @aadarshp31
+   */
+  static async logout() {
+    return await new API().addAuthHeader().get(CONSTANTS.LOGOUT_API);
+  }
+
+  /**
    * Makes a POST request to the signup route of the server.
    * @param payload data for user signup request.
    * @returns response body of the signup request.
