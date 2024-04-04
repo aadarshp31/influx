@@ -45,7 +45,8 @@ public class SecurityConfiguration {
         .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(customizer -> {
           customizer
-              .requestMatchers("/api", "/api/", "/api/auth/**")
+              .requestMatchers("/api", "/api/", "/api/auth/signin", "/api/auth/signin/", "/api/auth/signup",
+                  "/api/auth/signup/")
               .permitAll()
 
               .requestMatchers("/api/admin/**")
@@ -54,7 +55,7 @@ public class SecurityConfiguration {
               .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/")
               .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
-              .requestMatchers(HttpMethod.PUT, "/api/users", "/api/users/**")
+              .requestMatchers(HttpMethod.PUT, "/api/users", "/api/users/**", "/api/auth/logout", "/api/auth/logout/")
               .hasAnyAuthority(CONSTANT.ROLE_USER, CONSTANT.ROLE_ADMINISTRATOR)
 
               .requestMatchers(HttpMethod.DELETE, "/api/users", "/api/users/**")
