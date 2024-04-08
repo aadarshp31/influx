@@ -1,5 +1,5 @@
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthModal from '../pages/HomePage/layouts/AuthModal';
 import AuthUtils from '@/lib/AuthUtils';
 import { Button } from '../ui/button';
@@ -31,6 +31,12 @@ const menuItems = [
 
 function Header({}: Props) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	useEffect(() => {
+		if (!AuthUtils.isLoggedIn()) {
+			AuthUtils.logout(/*withRedirect*/ false);
+		}
+	}, []);
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
@@ -77,7 +83,9 @@ function Header({}: Props) {
 						<Button
 							variant='outline'
 							className='rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
-							onClick={AuthUtils.logout}
+							onClick={async () => {
+								await AuthUtils.logout();
+							}}
 						>
 							Logout
 						</Button>
@@ -140,7 +148,9 @@ function Header({}: Props) {
 									<Button
 										variant='outline'
 										className='rounded-md bg-black px-3 py-2 my-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
-										onClick={AuthUtils.logout}
+										onClick={async () => {
+											await AuthUtils.logout();
+										}}
 									>
 										Logout
 									</Button>

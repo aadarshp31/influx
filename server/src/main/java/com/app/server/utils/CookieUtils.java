@@ -34,7 +34,7 @@ public class CookieUtils {
     Cookie cookie = new Cookie(key, value);
     cookie.setPath("/");
     cookie.setHttpOnly(true);
-    cookie.setMaxAge(60 * 60 * 12); // 12 hours token expiration time in seconds
+    cookie.setMaxAge(60 * 60 * 24 * 7); // 7 days token expiration time in seconds
     response.addCookie(cookie);
   }
 
