@@ -59,7 +59,7 @@ export default class AuthUtils {
    * Logs out the user at the client side
    * @author @aadarshp31
    */
-  static async logout() {
+  static async logout(withRedirect: boolean = true) {
     // remove browser cookie via http request to backend
     await AuthApi.logout();
 
@@ -75,6 +75,6 @@ export default class AuthUtils {
       localStorage.removeItem(CONSTANTS.USER_KEY);
     }
 
-    location.pathname = "/";
+    if (!withRedirect) location.pathname = "/";
   }
 }
