@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 type Props = {};
 
 function Footer({}: Props) {
@@ -38,36 +40,36 @@ function Footer({}: Props) {
 							</h3>
 							<ul>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/features'
 									>
 										Features
-									</a>
+									</Link>
 								</li>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/pricing'
 									>
 										Pricing
-									</a>
+									</Link>
 								</li>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/affiliate-program'
 									>
 										Affiliate Program
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/press-kit'
 									>
 										Press Kit
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -79,36 +81,36 @@ function Footer({}: Props) {
 							</h3>
 							<ul>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/account'
 									>
 										Account
-									</a>
+									</Link>
 								</li>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/help'
 									>
 										Help
-									</a>
+									</Link>
 								</li>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/contact'
 									>
 										Contact Us
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/support'
 									>
 										Customer Support
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -120,28 +122,28 @@ function Footer({}: Props) {
 							</h3>
 							<ul>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/terms-and-conditions'
 									>
 										Terms &amp; Conditions
-									</a>
+									</Link>
 								</li>
 								<li className='mb-4'>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/privacy-policy'
 									>
 										Privacy Policy
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a
+									<Link
 										className=' text-base font-medium text-gray-900 hover:text-gray-700'
-										href='/'
+										to='/licencing'
 									>
 										Licensing
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>

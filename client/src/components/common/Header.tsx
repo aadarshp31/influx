@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import AuthModal from '../pages/HomePage/layouts/AuthModal';
 import AuthUtils from '@/lib/AuthUtils';
 import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -66,12 +67,12 @@ function Header({}: Props) {
 					<ul className='inline-flex space-x-8'>
 						{menuItems.map((item) => (
 							<li key={item.name}>
-								<a
-									href={item.href}
+								<Link
+									to={item.href}
 									className='text-sm font-semibold text-gray-800 hover:text-gray-900'
 								>
 									{item.name}
-								</a>
+								</Link>
 							</li>
 						))}
 					</ul>
