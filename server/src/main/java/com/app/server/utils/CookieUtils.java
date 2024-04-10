@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.Cookie;
@@ -23,6 +24,9 @@ public class CookieUtils {
   @Autowired
   private HttpServletRequest request;
 
+  @Value("${influx.jwt-token-expiry-ms}")
+  String JWT_TOKEN_EXPIRY_MS;
+
   /**
    * Sets key value pair to cookie for current HttpServletResponse
    * 
@@ -34,7 +38,7 @@ public class CookieUtils {
     Cookie cookie = new Cookie(key, value);
     cookie.setPath("/");
     cookie.setHttpOnly(true);
-    cookie.setMaxAge(60 * 60 * 24 * 7); // 7 days token expiration time in seconds
+    cookie.setMaxAge(Integer.parseInt(JWT_TOKEN_EXPIRY_MS) / 1000); // token expiration time in seconds
     response.addCookie(cookie);
   }
 
