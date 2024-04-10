@@ -27,6 +27,8 @@ public class JwtService {
 
   @Value("${influx.jwt-secret-key}")
   String JWT_SECRET_KEY;
+  @Value("${influx.jwt-token-expiry-ms}")
+  String JWT_TOKEN_EXPIRY_MS;
 
   /**
    * Gets secret key for signing jwt tokens
@@ -65,7 +67,7 @@ public class JwtService {
     return Jwts
         .builder()
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60)))
+        .expiration(new Date(System.currentTimeMillis() + Integer.parseInt(JWT_TOKEN_EXPIRY_MS)))
         .subject(userDetails.getUsername())
         .claim("roles", scope)
         .claims(extraClaims)

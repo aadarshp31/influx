@@ -32,3 +32,4 @@ influx:
   test-admin-email: ${ADMIN_USER_EMAIL}
   test-password: ${TEST_USER_PASSWORD}
   jwt-secret-key: ${JWT_SECURITY_KEY}
+  jwt-token-expiry-ms: ${JWT_TOKEN_EXPIRY_MS}

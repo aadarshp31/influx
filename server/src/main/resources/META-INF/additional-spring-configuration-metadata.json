@@ -29,6 +29,11 @@
       "name": "influx.jwt-secret-key",
       "type": "java.lang.String",
       "description": "A key for signing jwt tokens"
+    },
+    {
+      "name": "influx.jwt-token-expiry-ms",
+      "type": "java.lang.String",
+      "description": "jwt access token expiry time in ms"
     }
   ]
 }
