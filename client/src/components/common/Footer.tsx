@@ -28,7 +28,7 @@ function Footer({}: Props) {
 								<p className='mb-4  text-base font-medium'>The Meeting app</p>
 								<p className='text-sm text-gray-600'>
 									&copy; Copyright {new Date().getFullYear()}. All Rights
-									Reserved by <a href='/authors'>Authors</a>
+									Reserved by <Link to='/authors'>Authors</Link>
 								</p>
 							</div>
 						</div>
