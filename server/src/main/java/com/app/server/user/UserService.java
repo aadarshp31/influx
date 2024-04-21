@@ -41,7 +41,7 @@ public class UserService {
         .collect(Collectors.toList());
 
     if (!rolesOfLoggedInUser.contains(CONSTANT.ROLE_ADMINISTRATOR)) {
-      throw new AccessDeniedException("You are not authorized to access this resource");
+      return List.of(loggedInUser);
     }
 
     return userRepository.findAll();
