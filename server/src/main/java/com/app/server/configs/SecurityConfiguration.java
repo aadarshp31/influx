@@ -52,7 +52,7 @@ public class SecurityConfiguration {
               .requestMatchers("/api/admin/**")
               .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
-              .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/")
+              .requestMatchers(HttpMethod.GET, "/api/users/**")
               .hasAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
               .requestMatchers(HttpMethod.PUT, "/api/users", "/api/users/**", "/api/auth/logout", "/api/auth/logout/")
@@ -61,8 +61,6 @@ public class SecurityConfiguration {
               .requestMatchers(HttpMethod.DELETE, "/api/users", "/api/users/**")
               .hasAnyAuthority(CONSTANT.ROLE_ADMINISTRATOR)
 
-              .requestMatchers("/api/users/**")
-              .hasAuthority(CONSTANT.ROLE_USER)
 
               .anyRequest()
               .authenticated();
