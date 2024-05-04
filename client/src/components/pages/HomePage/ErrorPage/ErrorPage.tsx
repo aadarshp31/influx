@@ -1,10 +1,15 @@
 import App from '@/App';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 type Props = {};
 
 function ErrorPage({}: Props) {
+	useEffect(() => {
+		document.title = 'Influx | 404';
+	});
+
 	return (
 		<App>
 			<section className='p-10 max-w-full'>

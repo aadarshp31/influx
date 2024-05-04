@@ -1,3 +1,4 @@
+import AuthPage from '@/components/pages/AuthPage/AuthPage';
 import AuthorPage from '@/components/pages/AuthorPage/AuthorPage';
 import ErrorPage from '@/components/pages/HomePage/ErrorPage/ErrorPage';
 import HomePage from '@/components/pages/HomePage/HomePage';
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
 	{
 		path: '/about',
 		Component: AuthorPage
+	},
+	{
+		path: '/auth',
+		Component: AuthPage
 	},
 	{
 		path: '*',

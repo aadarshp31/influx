@@ -4,10 +4,15 @@ import FAQSection from './layouts/FAQSection';
 import PricingSection from './layouts/PricingSection';
 import NewsLetterSection from './layouts/NewsLetterSection';
 import App from '@/App';
+import { useEffect } from 'react';
 
 type Props = {};
 
 export function HomePage({}: Props) {
+	useEffect(() => {
+		document.title = 'Influx | Home';
+	});
+
 	return (
 		<App>
 			<div className='w-full'>

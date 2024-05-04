@@ -1,4 +1,5 @@
 import App from '@/App';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 type Props = {};
@@ -23,6 +24,10 @@ const authors = [
 ];
 
 function AuthorPage({}: Props) {
+	useEffect(() => {
+		document.title = 'Influx | Authors';
+	});
+
 	return (
 		<App>
 			<div className='mx-auto max-w-7xl px-4'>
