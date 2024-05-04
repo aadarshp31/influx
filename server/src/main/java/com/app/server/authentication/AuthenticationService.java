@@ -81,17 +81,20 @@ public class AuthenticationService {
           authorities);
 
       User newlyCreatedUser = userRepository.save(user);
+      String jwtToken = jwtService.generateToken(newlyCreatedUser);
 
       body.put("status", "success");
       body.put("message", "New user created successfully");
       body.put("user", newlyCreatedUser);
+      body.put(CONSTANT.ACCESS_TOKEN, jwtToken);
+      cookieUtils.setCookieValue(CONSTANT.ACCESS_TOKEN, jwtToken);
       return new ResponseEntity<Object>(body, HttpStatus.OK);
 
     } catch (Exception e) {
       body.put("status", "failure");
       body.put("message", e.getMessage());
       e.printStackTrace();
-      return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+      return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -132,7 +135,7 @@ public class AuthenticationService {
       e.printStackTrace();
       body.put("status", "failure");
       body.put("message", "Invalid username or password");
-      return new ResponseEntity<Object>(body, HttpStatus.FORBIDDEN);
+      return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
     }
   }
 
