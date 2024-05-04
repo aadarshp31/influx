@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import AuthApi from '@/apis/auth';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
 	firstname: z.string().min(2, {
@@ -35,6 +37,7 @@ type Props = {
 	toggleAuthForm: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 };
 export function SignupForm({ toggleAuthForm }: Props) {
+	const navigate = useNavigate();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -49,9 +52,48 @@ export function SignupForm({ toggleAuthForm }: Props) {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
 			const res = await AuthApi.signup(values);
-			console.log('Signed up!', res);
+			navigate('/');
 		} catch (error: any) {
-			console.error(error);
+			if (error && error instanceof AxiosError) {
+				const errorMessage: string | undefined = error?.response?.data?.message;
+
+				if (error.response && error?.response?.status >= 400) {
+					if (
+						errorMessage &&
+						errorMessage.toLocaleLowerCase().includes('password')
+					) {
+						form.setError('password', {
+							message: errorMessage,
+							type: 'value'
+						});
+					}
+
+					if (
+						errorMessage &&
+						errorMessage.toLocaleLowerCase().includes('username')
+					) {
+						form.setError('username', {
+							message: errorMessage,
+							type: 'value'
+						});
+					}
+
+					if (
+						errorMessage &&
+						errorMessage.toLocaleLowerCase().includes('email')
+					) {
+						form.setError('email', {
+							message: errorMessage,
+							type: 'value'
+						});
+					}
+
+					form.setFocus('firstname');
+				}
+				console.error(errorMessage);
+				return;
+			}
+			console.error(error.message);
 		}
 	}
 
@@ -183,6 +225,7 @@ export function SignupForm({ toggleAuthForm }: Props) {
 												<Input
 													className='flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50'
 													placeholder=''
+													type='password'
 													{...field}
 												/>
 											</FormControl>
