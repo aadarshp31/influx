@@ -6,7 +6,7 @@ function App({ children }: any) {
 	return (
 		<div>
 			<Header />
-			{children}
+			<div style={{ minHeight: '800px' }}>{children}</div>
 			<Footer />
 		</div>
 	);
