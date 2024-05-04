@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import AuthApi from '@/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import CONSTANTS from '@/lib/CONSTANTS';
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -42,8 +43,8 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
 			const res = await AuthApi.login(values);
-			localStorage.setItem('token', JSON.stringify(res.token));
-			localStorage.setItem('user', JSON.stringify(res.user));
+			localStorage.setItem(CONSTANTS.AUTH_TOKEN_KEY, JSON.stringify(res.token));
+			localStorage.setItem(CONSTANTS.USER_KEY, JSON.stringify(res.user));
 			navigate('/');
 		} catch (error: any) {
 			if (error && error instanceof AxiosError) {
