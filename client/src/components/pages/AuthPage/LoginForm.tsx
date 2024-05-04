@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import AuthApi from '@/apis/auth';
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -28,6 +29,7 @@ type Props = {
 };
 
 export default function LoginForm({ toggleAuthForm }: Props) {
+	const navigate = useNavigate();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -41,7 +43,7 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 			const res = await AuthApi.login(values);
 			localStorage.setItem('token', JSON.stringify(res.token));
 			localStorage.setItem('user', JSON.stringify(res.user));
-			location.pathname = '/';
+			navigate('/');
 		} catch (error: any) {
 			console.error(error);
 		}
