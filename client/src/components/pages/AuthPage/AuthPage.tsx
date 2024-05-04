@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 import { SignupForm } from './SignupForm';
 import App from '@/App';
@@ -9,6 +9,10 @@ type Props = {};
 
 function AuthPage({}: Props) {
 	const [showLogin, setShowLogin] = useState(true);
+
+	useEffect(() => {
+		document.title = 'Influx | Auth';
+	});
 
 	return (
 		<App>
