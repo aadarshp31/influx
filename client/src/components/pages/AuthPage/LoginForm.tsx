@@ -16,6 +16,7 @@ import AuthApi from '@/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import CONSTANTS from '@/lib/CONSTANTS';
+import _ from 'lodash';
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -48,32 +49,36 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 			navigate('/');
 		} catch (error: any) {
 			if (error && error instanceof AxiosError) {
-				const errorMessage: string | undefined = error?.response?.data?.message;
+				const body = error.response?.data;
+				const errorMessage = !_.isUndefined(body)
+					? error.response?.data.message
+					: error.message;
 
-				if (error.response && error?.response?.status >= 400) {
-					if (
-						errorMessage &&
-						errorMessage.toLocaleLowerCase().includes('password')
-					) {
-						form.setError('password', {
-							message: errorMessage,
-							type: 'value'
-						});
-					}
+				if (
+					_.isUndefined(body?.validationStatus) &&
+					!_.isUndefined(error?.response?.status) &&
+					error.response.status < 400
+				) {
+					console.error(errorMessage);
+					return;
+				}
 
-					if (
-						errorMessage &&
-						errorMessage.toLocaleLowerCase().includes('username')
-					) {
-						form.setError('username', {
-							message: errorMessage,
-							type: 'value'
-						});
-					}
+				if (!body.validationStatus && body?.password) {
+					form.setError('password', {
+						message: body.password,
+						type: 'value'
+					});
+					form.setFocus('password');
+				}
 
+				if (!body.validationStatus && body?.username) {
+					form.setError('username', {
+						message: body.username,
+						type: 'value'
+					});
 					form.setFocus('username');
 				}
-				console.error(error.response?.data?.message);
+				console.error(errorMessage);
 				return;
 			}
 			console.error(error.message);
@@ -128,7 +133,7 @@ export default function LoginForm({ toggleAuthForm }: Props) {
 													className='flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50'
 													placeholder=''
 													{...field}
-													autoComplete='new-password'
+													autoComplete='username'
 												/>
 											</FormControl>
 											<FormDescription>
