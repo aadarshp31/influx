@@ -56,16 +56,23 @@ public class AuthenticationService {
    */
   public ResponseEntity<Object> registUser(UserSignupDTO userSignupDTO) {
     Map<String, Object> body = new HashMap<String, Object>();
+    body.put("validationStatus", true);
     try {
 
       Boolean isUsernameExists = userRepository.findByUsername(userSignupDTO.username).isPresent();
       if (isUsernameExists) {
-        throw new Exception("Username already exists.");
+        String validationMessage = "Username already exists";
+        body.put("validationStatus", false);
+        body.put("username", validationMessage);
+        throw new Exception(validationMessage);
       }
 
       Boolean isEmailExists = userRepository.findByEmail(userSignupDTO.email).isPresent();
       if (isEmailExists) {
-        throw new Exception("Email already exists.");
+        String validationMessage = "Email already exists";
+        body.put("validationStatus", false);
+        body.put("email", validationMessage);
+        throw new Exception(validationMessage);
       }
 
       Role userRole = roleRepository.findByAuthority(CONSTANT.ROLE_USER).get();
@@ -107,13 +114,17 @@ public class AuthenticationService {
    */
   public ResponseEntity<Object> signin(UserSigninDTO userSigninDTO) {
     Map<String, Object> body = new HashMap<String, Object>();
+    body.put("validationStatus", true);
     try {
 
       Boolean isUserExists = userRepository.findByUsername(userSigninDTO.username).isPresent();
 
       if (!isUserExists) {
+        String validationMessage = "Username does not exists";
         body.put("status", false);
-        body.put("message", String.format("User with username \"%s\" does not exist", userSigninDTO.username));
+        body.put("validationStatus", false);
+        body.put("username", validationMessage);
+        body.put("message", validationMessage);
         return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
       }
 
@@ -133,6 +144,10 @@ public class AuthenticationService {
     } catch (AuthenticationException e) {
 
       e.printStackTrace();
+      String validationMessage = "Invalid username or password";
+      body.put("validationStatus", false);
+      body.put("username", validationMessage);
+      body.put("password", validationMessage);
       body.put("status", "failure");
       body.put("message", "Invalid username or password");
       return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
