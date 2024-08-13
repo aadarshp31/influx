@@ -1,6 +1,10 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "editor.formatOnSave": true,
-  "java.compile.nullAnalysis.mode": "automatic",
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"editor.formatOnSave": false,
+	"java.compile.nullAnalysis.mode": "automatic",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[java]": {
+		"editor.defaultFormatter": "redhat.java"
+	}
 }
+	

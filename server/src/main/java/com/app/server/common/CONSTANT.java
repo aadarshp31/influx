@@ -15,4 +15,11 @@ public class CONSTANT {
 
   // header related constants
   public final static String ACCESS_TOKEN = "token";
+
+  // Dyte API's URL
+  public final static String HTTPS = "https://";
+  public final static String DYTE_API = "api.dyte.io/v2/";
+  public final static String MEETINGS = "meetings/";
+  public final static String PARTICIPANTS = "participants/";
+
 }
