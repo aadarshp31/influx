@@ -2,5 +2,14 @@
   "java.configuration.updateBuildConfiguration": "automatic",
   "editor.formatOnSave": true,
   "java.compile.nullAnalysis.mode": "automatic",
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "java.test.config": [
+    {
+      "name": "Test with AppMap",
+      "vmArgs": [
+        "-javaagent:${userHome}/.appmap/lib/java/appmap.jar",
+        "-Dappmap.output.directory=${command:appmap.getAppmapDir}"
+      ]
+    }
+  ]
 }

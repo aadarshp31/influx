@@ -7,16 +7,14 @@ type Props = {};
 const authors = [
 	{
 		name: 'Adarsh Pandey',
-		image:
-			'https://media.licdn.com/dms/image/D4D03AQGwdVAebLDLDA/profile-displayphoto-shrink_800_800/0/1694711604292?e=1717027200&v=beta&t=MoPFFSE4t1DW_X6RI8oEpeFk7sDy9QXISi4EoJYlhhc',
+		image: 'https://www.adarshpandey.in/img/DP.JPG',
 		position: 'Full Stack Developer',
 		linkedInProfile: 'https://www.linkedin.com/in/aadarshp31',
 		portfolioWebsite: 'https://adarshpandey.in'
 	},
 	{
 		name: 'Aniket Soni',
-		image:
-			'https://media.licdn.com/dms/image/D5603AQFU7Rtk1OS0YA/profile-displayphoto-shrink_800_800/0/1695602064209?e=1717027200&v=beta&t=Vnp3x8YwsK-bgQaXA3FbH_zJ8khq-RxMyRNI65VTFdM',
+		image: 'https://avatars.githubusercontent.com/u/52620293?v=4',
 		position: 'Full Stack Developer',
 		linkedInProfile: 'https://www.linkedin.com/in/aniketsonii',
 		portfolioWebsite: 'https://aniketsonii.github.io'
